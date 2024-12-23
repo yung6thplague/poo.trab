@@ -13,6 +13,10 @@ public class FuncCliente {
         int nif = Ler.umInt();
         System.out.println("Insira o nome do cliente.");
         String nome = Ler.umaString();
+        System.out.println("Insira o email do cliente.");
+        String email= Ler.umaString();
+        System.out.println("Insira a idade do cliente:");
+        int idade = Ler.umInt();
         System.out.println("Insira as referências dos produtos comprados pelo cliente. (Insira 0 quando quiser terminar): ");
         System.out.println(lista_item.toString());
         int refer;
@@ -33,7 +37,8 @@ public class FuncCliente {
                 System.out.println("Item não encontrado!");
             }
         } while (true);
-        Cliente c1 = new Cliente(nome, nif, lista_compras);
+        Pessoa p1 = new Pessoa(nome,nif,email,idade);
+        Cliente c1 = new Cliente(p1,lista_item);
         if (!lista_cliente.contains(c1)) {
             lista_cliente.add(c1);
             System.out.println("Cliente " + nif + " adicionado com sucesso!");
@@ -84,7 +89,7 @@ public class FuncCliente {
         if (!check) {
             throw new NaoEncontreiException("Produto não encontrado! ");
         }
-        System.out.println("O que pretende alterar? (1- NIF, 2- Nome, 3- Lista de compras) ");
+        System.out.println("O que pretende alterar? (1- NIF, 2- Nome, 3-Email, 4-Idade, 5- Lista de compras. ) ");
         int escolha = Ler.umInt();
         switch (escolha) {
             case 1:
@@ -108,7 +113,24 @@ public class FuncCliente {
                 }
                 break;
             case 3:
-
+                System.out.println("Insira o novo email: ");
+                String email = Ler.umaString();
+                for (Cliente c : lista_cliente) {
+                    if (c.getNif() == nif) {
+                        c.setEmail(email);
+                        System.out.println("Nome alterado com sucesso!");
+                    }
+                }
+                break;
+            case 4:
+                System.out.println("Insira a nova idade: ");
+                int idade = Ler.umInt();
+                for (Cliente c : lista_cliente) {
+                    if (c.getNif() == nif) {
+                        c.setIdade(idade);
+                        System.out.println("Idade alterada com sucesso!");
+                    }
+                }
                 break;
         }
 

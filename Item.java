@@ -6,6 +6,7 @@ public class Item implements Serializable {
     private String requisitos;
     private String descricao;
     private double custo;
+    private int idademinima;
 
     public Item() {
 
@@ -16,13 +17,14 @@ public class Item implements Serializable {
         this.custo = 0.0;
     }
 
-    public Item(int codigo, String nome, String descricao, double custo, String caract_tecnica) {
+    public Item(int codigo, String nome, String descricao, double custo, String caract_tecnica, int idademinima) {
 
         this.codigo = codigo;
         this.nome = nome;
         this.custo = custo;
         this.requisitos = caract_tecnica;
         this.descricao = descricao;
+        this.idademinima = idademinima;
     }
 
 
@@ -51,6 +53,8 @@ public class Item implements Serializable {
         return requisitos;
     }
 
+    public int getIdademinima() {return idademinima;}
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -67,9 +71,11 @@ public class Item implements Serializable {
         this.codigo = codigo;
     }
 
+    public void setIdademinima(int idademinima) {this.idademinima = idademinima;}
+
     @Override
     public String toString() {
-        return "Referência do item: " + codigo + " ;\n Nome do item: " + nome + " ;\n Custo do electrodoméstico: " + custo + " ;\n Descrição do eletrodoméstico: " + descricao + " ;\n Características Técnicas : " + requisitos + " \n\n\n";
+        return "Referência do item: " + codigo + " ;\n Nome do item: " + nome + " ;\n Custo do produto: " + custo + " ;\n Descrição do produto: " + descricao + " ;\n Requisitos: " + requisitos + "\n Idade Mínima: "+ idademinima+" \n\n\n";
     }
 
 

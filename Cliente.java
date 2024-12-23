@@ -31,7 +31,7 @@ public class Cliente extends Pessoa  {
     @Override
     public String toString()
     {
-        return "NIF do cliente: " + super.getNif() + " ;\n Nome do Cliente: " + super.getNome() + " ;\n Lista de Compras: " + lista_compra.toString() + " \n\n\n";
+        return "NIF do cliente: " + super.getNif() + " ;\n Nome do Cliente: " + super.getNome() + " ;\n Email do Cliente: " +super.getEmail()+ " ;\n Idade do cliente: "+ super.getIdade()+ " ;\n Lista de Compras: " + lista_compra.toString() + " \n\n\n";
     }
 
 

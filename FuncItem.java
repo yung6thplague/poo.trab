@@ -19,7 +19,9 @@ public class FuncItem {
         double custo = Ler.umDouble();
         System.out.println("Insira os requisitos do item.");
         String requisitos = Ler.umaString();
-        Item i1 = new Item(codigo,nome,descricao,custo,requisitos);
+        System.out.println("Insira a idade mínima do item.");
+        int idademinima = Ler.umInt();
+        Item i1 = new Item(codigo,nome,descricao,custo,requisitos,idademinima);
         if (!lista.contains(i1)) {
             lista.add(i1);
         } else {
@@ -75,7 +77,7 @@ public class FuncItem {
         if(!check) {
             throw new NaoEncontreiException("Produto não encontrado! ");
         }
-        System.out.println("O que pretende alterar? (1- Referência, 2- Nome, 3- Descrição, 4- Custo, 5- Requisitos) ");
+        System.out.println("O que pretende alterar? (1- Referência, 2- Nome, 3- Descrição, 4- Custo, 5- Requisitos, 6- Idade Mínima.) ");
         int escolha = Ler.umInt();
         switch (escolha) {
             case 1:
@@ -125,6 +127,16 @@ public class FuncItem {
                     if(i1.getCodigo()==codigo) {
                         i1.setRequisitos(requisitos);
                         System.out.println("Requisitos alteradas com sucesso!");
+                    }
+                }
+                break;
+            case 6:
+                System.out.println("Insira a nova idade mínima: ");
+                int idademinima = Ler.umInt();
+                for(Item i1 : lista) {
+                    if(i1.getCodigo()==codigo) {
+                        i1.setIdademinima(idademinima);
+                        System.out.println("Idade mínima alterada com sucesso!");
                     }
                 }
                 break;
