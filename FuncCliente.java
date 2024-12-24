@@ -17,26 +17,7 @@ public class FuncCliente {
         String email= Ler.umaString();
         System.out.println("Insira a idade do cliente:");
         int idade = Ler.umInt();
-        System.out.println("Insira as referências dos produtos comprados pelo cliente. (Insira 0 quando quiser terminar): ");
-        System.out.println(lista_item.toString());
-        int refer;
-        do {
-            refer = Ler.umInt();
-            if(refer == 0) {
-                break;
-            }
-            boolean check = false;
-            for (Item i1 : lista_item) {
-                if (i1.getCodigo() == refer) {
-                    lista_compras.add(i1);
-                    check = true;
-                    break;
-                }
-            }
-            if (!check) {
-                System.out.println("Item não encontrado!");
-            }
-        } while (true);
+        lista_item= new ArrayList<>();
         Pessoa p1 = new Pessoa(nome,nif,email,idade);
         Cliente c1 = new Cliente(p1,lista_item);
         if (!lista_cliente.contains(c1)) {
@@ -46,7 +27,7 @@ public class FuncCliente {
             throw new NaoEncontreiException("Cliente já existe !");
         }
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
             os.writeObject(lista_cliente);
             os.flush(); //
         } catch (IOException e) {
@@ -69,7 +50,7 @@ public class FuncCliente {
         }
         System.out.println("O cliente foi eliminado com sucesso!");
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
             os.writeObject(lista_cliente);
             os.flush(); //
         } catch (IOException e) {
@@ -135,7 +116,7 @@ public class FuncCliente {
         }
 
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
             os.writeObject(lista_cliente);
             os.flush(); //
         } catch (IOException e) {
