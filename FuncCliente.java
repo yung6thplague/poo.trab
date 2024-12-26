@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class FuncCliente {
-
+//teste
     public static void adicionarCliente(ArrayList<Cliente> lista_cliente, ArrayList<Item> lista_item) {
         ArrayList<Item> lista_compras = new ArrayList<Item>();
         System.out.println("Insira o nif do cliente.");
