@@ -114,14 +114,16 @@ public class GerirLoja {
         ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
         ArrayList<Item> lista_item = new ArrayList<Item>();
         ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
+        ObjectInputStream is_cliente = new ObjectInputStream(new FileInputStream("C::\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
         try {
-            if (is == null) {
+            if (is == null || is_cliente == null) {
                 throw new IOException("Can't find file.");
             }
 
 
             while (true) {
                 lista_item = (ArrayList<Item>) is.readObject();
+                lista_clientes = (ArrayList<Cliente>) is_cliente.readObject();
             }
         } catch (EOFException e) {
             System.out.println(e.getMessage());
@@ -129,8 +131,9 @@ public class GerirLoja {
             System.out.println(ex.getMessage());
         } finally {
             try {
-                if (is != null) {
+                if (is != null || is_cliente != null) {
                     is.close();
+                    is_cliente.close();
                 }
             } catch (IOException closeException) {
                 closeException.printStackTrace();
