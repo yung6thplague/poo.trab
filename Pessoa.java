@@ -22,9 +22,7 @@ public class Pessoa implements Serializable {
         email="";
     }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getNome() { return nome; }
 
     public void setNome(String nome) {
         this.nome = nome;

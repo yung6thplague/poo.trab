@@ -15,7 +15,8 @@ public class GerirLoja {
         System.out.println("4 - Consultar catálogo de programas especializados");
         System.out.println("5 - Consultar estatísticas sobre loja.");
         System.out.println("6 – Consultar vendas a clientes.");
-        System.out.println("7 - Sair");
+        System.out.println("7 - Registrar Venda");
+        System.out.println("8 - Sair");
         System.out.println("\n");
         opcao = Ler.umInt();
         return opcao;
@@ -97,13 +98,22 @@ public class GerirLoja {
         opcao = Ler.umInt();
         return opcao;
     }
+    private static int menu_venda() {
+        int opcao;
+        System.out.println("----- Registrar Venda  -----");
+        System.out.println("1- Começar a registrar a venda.");
+        System.out.println("2 - Sair");
+        System.out.println("\n");
+        opcao = Ler.umInt();
+        return opcao;
+    }
 
 
     public static void main(String[] args) throws IOException {
-        int escolha, escolha_soft_segur, escolha_sist_oper, escolha_apt, escolha_prog_espec, escolha_stats, escolha_cliente;
+        int escolha, escolha_soft_segur, escolha_sist_oper, escolha_apt, escolha_prog_espec, escolha_stats, escolha_cliente, escolha_venda;
         ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
         ArrayList<Item> lista_item = new ArrayList<Item>();
-        ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\Projeto\\src\\item.dat"));
+        ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
         try {
             if (is == null) {
                 throw new IOException("Can't find file.");
@@ -162,6 +172,7 @@ public class GerirLoja {
                                 break;
                         }
                     } while (escolha_soft_segur != 5);
+                    break;
                 case 2:
                     do{
                         escolha_sist_oper = menu_sist_oper();
@@ -180,6 +191,7 @@ public class GerirLoja {
                                 break;
                         }
                     } while (escolha_sist_oper != 5);
+                    break;
                 case 3:
                     do{
                         escolha_apt = menu_apt();
@@ -198,6 +210,7 @@ public class GerirLoja {
                                 break;
                         }
                     } while (escolha_apt != 5);
+                    break;
                 case 4:
                     do{
                         escolha_prog_espec = menu_prog_espec();
@@ -216,6 +229,7 @@ public class GerirLoja {
                                 break;
                         }
                     } while (escolha_prog_espec!=5);
+                    break;
                 case 5:
                     do{
                         escolha_stats = menu_stats();
@@ -223,6 +237,7 @@ public class GerirLoja {
 
                         }
                     } while (escolha_stats !=4 );
+                    break;
                 case 6:
                     do{
                         escolha_cliente = menu_cliente();
@@ -236,10 +251,27 @@ public class GerirLoja {
 
                         }
 
+
                     } while (escolha_cliente != 5);
+                    break;
+                case 7:
+                    do{
+                        escolha_venda = menu_venda();
+                        switch (escolha_venda) {
+                            case 1:
+                                FuncItem.registarVenda("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat",lista_clientes);
+                                break;
+
+                        }
+
+
+                    } while (escolha_venda != 2);
+                    break;
             }
 
-        } while(escolha != 7);
+
+
+        } while(escolha != 8);
 
     }
 
