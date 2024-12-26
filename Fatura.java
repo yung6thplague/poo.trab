@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-// 1 2 3 testando ha ha ha
+// 1 2 3 testando ha ha
 public class Fatura implements Serializable {
     private int numeroFatura;
     private LocalDate data;
