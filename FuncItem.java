@@ -6,8 +6,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.Random;
 
 public class FuncItem {
 
@@ -213,7 +215,21 @@ public class FuncItem {
         }
 
         cliente.getLista_compra().addAll(itensComprados);
-        System.out.println("Venda registaada com sucesso para o cliente " + cliente.getNome() + ".");
+        System.out.println("Venda registada com sucesso para o cliente " + cliente.getNome() + ".");
+        System.out.println("Deseja gerar fatura para esta venda? (S/N)");
+        String respostaFatura = Ler.umaString().toUpperCase();
+        if (respostaFatura.equals("S")) {
+            int numeroFatura = (int) (Math.random() * 100000);
+            LocalDate dataAtual = LocalDate.now();
+            List<Integer> quantidades = new ArrayList<>();
+            for (Item item : itensComprados) {
+                quantidades.add(1);
+            }
+
+            Fatura.imprimirFatura(numeroFatura, dataAtual, cliente, quantidades, itensComprados);
+        } else {
+            System.out.println("Fatura não gerada.");
+        }
     }
 
 

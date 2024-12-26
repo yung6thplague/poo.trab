@@ -10,8 +10,8 @@ public class Fatura implements Serializable {
     private List<Integer> quantidades;
     private double valorTotal;
 
-    public Fatura(int numeroFatura, LocalDate data, Cliente cliente,  List<Integer> quantidades, double valorTotal) {
-        this.numeroFatura = numeroFatura;
+    public Fatura(LocalDate data, Cliente cliente,  List<Integer> quantidades, double valorTotal) {
+        this.numeroFatura = this.numeroFatura ++;
         this.data = data;
         this.cliente = cliente;
         this.quantidades = quantidades;
@@ -19,19 +19,29 @@ public class Fatura implements Serializable {
     }
 
 
-    public void imprimirFatura() {
+    public static void imprimirFatura(int numeroFatura, LocalDate data, Cliente cliente, List<Integer> quantidades, ArrayList<Item> listaCompra) {
+        double valorTotal = 0;
         System.out.println("--------- Fatura Fiscal ---------");
         System.out.println("Número da Fatura: " + numeroFatura);
         System.out.println("Data: " + data);
         System.out.println("Cliente: " + cliente.getNome());
         System.out.println("Produtos:");
-        for (int i = 0; i < getLista_compra().size(); i++) {
-            Item produto = getLista_compra().get(i);
+
+
+        for (int i = 0; i < listaCompra.size(); i++) {
+            Item produto = listaCompra.get(i);
             int quantidade = quantidades.get(i);
+            double precoUnitario = produto.getCusto();
+            double subtotal = precoUnitario * quantidade;
+
             System.out.printf("  - %s | Qtd: %d | Preço Unitário: %.2f | Subtotal: %.2f\n",
-                    produto.getNome(), quantidade, produto.getLista_compra(), getLista_compra() * quantidade);
+                    produto.getNome(), quantidade, precoUnitario, subtotal);
+
+            valorTotal += subtotal;
         }
-        System.out.printf("Valor Total: %.2f\n", valorTotal);
+
+        System.out.printf("Valor Total: \n" +valorTotal);
         System.out.println("---------------------------------");
     }
 }
+
