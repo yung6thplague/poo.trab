@@ -6,7 +6,7 @@ public class Stats {
     private List<Venda> vendas;
 
     // Construtor
-    public Stats(List<Venda> vendas) {
+    public Stats(List<Venda> vendas) { //esta porra nao funciona, alguem por favor que de uma olhada
         this.vendas = vendas;
     }
 
