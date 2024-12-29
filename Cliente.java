@@ -23,7 +23,6 @@ public class Cliente extends Pessoa  {
 
 
 
-
     public void setLista_compra(ArrayList<Item> lista_compra) {
         this.lista_compra = (ArrayList<Item>)lista_compra.clone();
     }

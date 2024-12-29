@@ -27,7 +27,9 @@ public class FuncItem {
         String requisitos = Ler.umaString();
         System.out.println("Insira a idade mínima do item.");
         int idademinima = Ler.umInt();
-        Item i1 = new Item(codigo, nome, descricao, custo, requisitos, idademinima);
+        System.out.println("Insira a data da compra (YYYY-MM-DD): ");
+        LocalDate dataCompra = LocalDate.parse(Ler.umaString());
+        Item i1 = new Item(codigo, nome, descricao, custo, requisitos, idademinima, dataCompra);
         if (!lista.contains(i1)) {
             lista.add(i1);
         } else {
@@ -214,7 +216,10 @@ public class FuncItem {
             }
         }
 
-        cliente.getLista_compra().addAll(itensComprados);
+        for (Item item : itensComprados) {
+            item.setDataCompra(LocalDate.now()); // Define a data de compra para o item
+            cliente.getLista_compra().add(item);   //verificar
+        }
         System.out.println("Venda registada com sucesso para o cliente " + cliente.getNome() + ".");
         System.out.println("Deseja gerar fatura para esta venda? (S/N)");
         String respostaFatura = Ler.umaString().toUpperCase();

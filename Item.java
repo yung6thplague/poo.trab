@@ -1,5 +1,5 @@
 import java.io.Serializable;
-
+import java.time.LocalDate;
 public class Item implements Serializable {
     private int codigo;
     private String nome;
@@ -7,6 +7,7 @@ public class Item implements Serializable {
     private String descricao;
     private double custo;
     private int idademinima;
+    private LocalDate dataCompra;
 
     public Item() {
 
@@ -17,7 +18,7 @@ public class Item implements Serializable {
         this.custo = 0.0;
     }
 
-    public Item(int codigo, String nome, String descricao, double custo, String caract_tecnica, int idademinima) {
+    public Item(int codigo, String nome, String descricao, double custo, String caract_tecnica, int idademinima, LocalDate dataCompra) {
 
         this.codigo = codigo;
         this.nome = nome;
@@ -25,6 +26,7 @@ public class Item implements Serializable {
         this.requisitos = caract_tecnica;
         this.descricao = descricao;
         this.idademinima = idademinima;
+        this.dataCompra = dataCompra;
     }
 
 
@@ -72,6 +74,14 @@ public class Item implements Serializable {
     }
 
     public void setIdademinima(int idademinima) {this.idademinima = idademinima;}
+
+    public LocalDate getDataCompra() {
+        return dataCompra;
+    }
+
+    public void setDataCompra(LocalDate dataCompra) {
+        this.dataCompra = dataCompra;
+    }
 
     @Override
     public String toString() {

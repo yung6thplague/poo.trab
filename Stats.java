@@ -3,29 +3,22 @@ import java.time.LocalDate;
 import myinputs.Ler;
 
 public class Stats {
-    private List<Venda> vendas;
+    private List<Cliente> clientes;
+
 
     // Construtor
-    public Stats(List<Venda> vendas) { //esta porra nao funciona, alguem por favor que de uma olhada
-        this.vendas = vendas;
+    public Stats(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     // Produtos Mais/Menos Vendidos
     public void produtosVendidos() {
         Map<Item, Integer> contador = new HashMap<>();
 
-        for (Venda venda : vendas) {
-            List<Item> produtos = venda.getProdutos();
-            List<Integer> quantidades = venda.getQuantidades();
-
-            for (int i = 0; i < produtos.size(); i++) {
-                Item produto = produtos.get(i);
-                int quantidade = quantidades.get(i);
-                if (contador.containsKey(produto)) {
-                    contador.put(produto, contador.get(produto) + quantidade);
-                } else {
-                    contador.put(produto, quantidade);
-                }
+        for (Cliente cliente: clientes) {
+            List<Item> produtos = cliente.getLista_compra();
+            for (Item produto : produtos) {
+                contador.put(produto, contador.getOrDefault(produto, 0) + 1);
             }
         }
 
@@ -54,15 +47,13 @@ public class Stats {
     public void melhoresClientes() {
         Map<Cliente, Double> totalPorCliente = new HashMap<>();
 
-        for (Venda venda : vendas) {
-            Cliente cliente = venda.getCliente();
-            double total = venda.getTotal();
-
-            if (totalPorCliente.containsKey(cliente)) {
-                totalPorCliente.put(cliente, totalPorCliente.get(cliente) + total);
-            } else {
-                totalPorCliente.put(cliente, total);
+        for (Cliente cliente : clientes) {
+            double total = 0;
+            for (Item item : cliente.getLista_compra()) {
+                total += item.getCusto();
             }
+
+            totalPorCliente.put(cliente, total);
         }
 
         Cliente melhorCliente = null;
@@ -82,9 +73,9 @@ public class Stats {
     public double calcularFaturamento(LocalDate inicio, LocalDate fim) {
         double total = 0;
 
-        for (Venda venda : vendas) {
-            if (!venda.getData().isBefore(inicio) && !venda.getData().isAfter(fim)) {
-                total += venda.getTotal();
+        for (Item item : cliente.getLista_compra()) {
+            if (!item.getDataCompra().isBefore(inicio) && !item.getDataCompra().isAfter(fim)) {
+                total += item.getCusto();
             }
         }
 
@@ -113,5 +104,5 @@ public class Stats {
         double total = calcularFaturamento(inicioMes, hoje);
         System.out.printf("Faturamento Mensal (%s a %s): %.2f\n", inicioMes, hoje, total);
     }
-        
+
 }
