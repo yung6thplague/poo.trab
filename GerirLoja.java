@@ -79,8 +79,19 @@ public class GerirLoja {
         System.out.println("----- Estatísticas da Loja -----");
         System.out.println("1 - Itens mais vendidos.");
         System.out.println("2 - Melhores clientes.");
-        System.out.println("3 - Valor faturado no mês.");
+        System.out.println("3 - Valor faturado.");
         System.out.println("4 - Sair");
+        System.out.println("\n");
+        opcao = Ler.umInt();
+        return opcao;
+    }
+    private static int menu_stats2(){
+        int opcao;
+        System.out.println("Deseja verificar em que intervalo de tempo?");
+        System.out.println("1- Faturamento geral.");
+        System.out.println("2- Faturamento diário.");
+        System.out.println("3- Faturamento semanal.");
+        System.out.println("4- Faturamento mensal.");
         System.out.println("\n");
         opcao = Ler.umInt();
         return opcao;
@@ -110,7 +121,7 @@ public class GerirLoja {
 
 
     public static void main(String[] args) throws IOException {
-        int escolha, escolha_soft_segur, escolha_sist_oper, escolha_apt, escolha_prog_espec, escolha_stats, escolha_cliente, escolha_venda;
+        int escolha, escolha_soft_segur, escolha_sist_oper, escolha_apt, escolha_prog_espec, escolha_stats, escolha_stats2, escolha_cliente, escolha_venda;
         ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
         ArrayList<Item> lista_item = new ArrayList<Item>();
         ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
@@ -228,7 +239,26 @@ public class GerirLoja {
                             case 2:
                                 Stats.melhoresClientes();
                             case 3:
-                                Stats.calcularFaturamento();
+                            do{
+                                escolha_stats2 = menu_stats2();
+                                switch(escolha_stats2){
+                                    case 1:
+                                        Stats.calcularFaturamento();
+                                        case 2:
+                                            Stats.faturamentoDiario();
+                                    case 3:
+                                        Stats.faturamentoSemanal();
+                                    case 4:
+                                        Stats.faturamentoMensal();
+
+
+
+
+                                }
+
+                            }while (escolha_stats2 != 5);
+
+
 
                         }
                     } while (escolha_stats !=4 );
