@@ -27,8 +27,7 @@ public class FuncItem {
         String requisitos = Ler.umaString();
         System.out.println("Insira a idade mínima do item.");
         int idademinima = Ler.umInt();
-        System.out.println("Insira a data da compra (YYYY-MM-DD): ");
-        LocalDate dataCompra = LocalDate.parse(Ler.umaString());
+        LocalDate dataCompra = LocalDate.now();
         Item i1 = new Item(codigo, nome, descricao, custo, requisitos, idademinima, dataCompra);
         if (!lista.contains(i1)) {
             lista.add(i1);

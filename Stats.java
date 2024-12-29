@@ -1,9 +1,9 @@
 import java.util.*;
 import java.time.LocalDate;
 import myinputs.Ler;
-
+import java.io.*;
 public class Stats {
-    private List<Cliente> clientes;
+    private static List<Cliente> clientes;
 
 
     // Construtor
@@ -12,7 +12,7 @@ public class Stats {
     }
 
     // Produtos Mais/Menos Vendidos
-    public void produtosVendidos() {
+    public static void produtosVendidos() {
         Map<Item, Integer> contador = new HashMap<>();
 
         for (Cliente cliente: clientes) {
@@ -44,7 +44,7 @@ public class Stats {
     }
 
     // Melhor Cliente
-    public void melhoresClientes() {
+    public static void melhoresClientes() {
         Map<Cliente, Double> totalPorCliente = new HashMap<>();
 
         for (Cliente cliente : clientes) {
@@ -70,39 +70,44 @@ public class Stats {
     }
 
     // Calcular Faturamento em um Período
-    public double calcularFaturamento(LocalDate inicio, LocalDate fim) {
+    public static double calcularFaturamento(Cliente cliente, LocalDate inicio, LocalDate fim) {
         double total = 0;
 
-        for (Item item : cliente.getLista_compra()) {
-            if (!item.getDataCompra().isBefore(inicio) && !item.getDataCompra().isAfter(fim)) {
-                total += item.getCusto();
+        if (cliente.getLista_compra() != null) { // Verifica se a lista não é nula
+            for (Item item : cliente.getLista_compra()) {
+                if (item.getDataCompra() != null && // Verifica se a data da compra não é nula
+                        !item.getDataCompra().isBefore(inicio) && !item.getDataCompra().isAfter(fim)) {
+                    total += item.getCusto();
+                }
             }
         }
 
         return total;
     }
 
-    // Faturamento Diário
-    public void faturamentoDiario() {
+
+    public void faturamentoDiario(Cliente cliente) {
         LocalDate hoje = LocalDate.now();
-        double total = calcularFaturamento(hoje, hoje);
+        double total = calcularFaturamento(cliente, hoje, hoje);
         System.out.printf("Faturamento Diário (%s): %.2f\n", hoje, total);
     }
 
     // Faturamento Semanal
-    public void faturamentoSemanal() {
+    public void faturamentoSemanal(Cliente cliente) {
         LocalDate hoje = LocalDate.now();
         LocalDate inicioSemana = hoje.minusDays(6); // Últimos 7 dias
-        double total = calcularFaturamento(inicioSemana, hoje);
+        double total = calcularFaturamento(cliente, inicioSemana, hoje);
         System.out.printf("Faturamento Semanal (%s a %s): %.2f\n", inicioSemana, hoje, total);
     }
 
     // Faturamento Mensal
-    public void faturamentoMensal() {
+    public void faturamentoMensal(Cliente cliente) {
         LocalDate hoje = LocalDate.now();
         LocalDate inicioMes = hoje.withDayOfMonth(1); // Primeiro dia do mês
-        double total = calcularFaturamento(inicioMes, hoje);
+        double total = calcularFaturamento(cliente, inicioMes, hoje);
         System.out.printf("Faturamento Mensal (%s a %s): %.2f\n", inicioMes, hoje, total);
     }
 
+
 }
+

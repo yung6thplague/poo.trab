@@ -114,7 +114,7 @@ public class GerirLoja {
         ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
         ArrayList<Item> lista_item = new ArrayList<Item>();
         ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
-        ObjectInputStream is_cliente = new ObjectInputStream(new FileInputStream("C::\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
+        ObjectInputStream is_cliente = new ObjectInputStream(new FileInputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
         try {
             if (is == null || is_cliente == null) {
                 throw new IOException("Can't find file.");
@@ -139,20 +139,6 @@ public class GerirLoja {
                 closeException.printStackTrace();
             }
         }
-
-        //try {
-          //  ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\Projeto\\src\\item.dat"));
-            //ObjectInputStream is_cliente = new ObjectInputStream(new FileInputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
-           // lista_clientes = (ArrayList<Cliente>) is_cliente.readObject();
-           // lista_soft_segur = (ArrayList<Item>) is.readObject();
-           // System.out.println(lista_soft_segur.toString());
-            //lista_apt = (ArrayList<Item>) is.readObject();
-            //lista_prog_espec = (ArrayList<Item>) is.readObject();
-
-        //}
-        //catch (IOException  | ClassNotFoundException e){
-          //  System.out.println(e.getMessage());
-        //}
         do{
             escolha = menu();
             switch (escolha){
@@ -237,6 +223,12 @@ public class GerirLoja {
                     do{
                         escolha_stats = menu_stats();
                         switch (escolha_stats) {
+                            case 1:
+                                Stats.produtosVendidos();
+                            case 2:
+                                Stats.melhoresClientes();
+                            case 3:
+                                Stats.calcularFaturamento();
 
                         }
                     } while (escolha_stats !=4 );
