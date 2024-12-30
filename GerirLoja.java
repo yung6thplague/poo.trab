@@ -243,23 +243,23 @@ public class GerirLoja {
                             do{
                                 escolha_stats2 = menu_stats2();
                                 switch(escolha_stats2){
+
                                     case 1:
-                                       // Stats.calcularFaturamento();
+                                        LocalDate data = LocalDate.now(); // Hoje
+                                        double faturamentoDiario = Stats.calcularFaturamento(data, data);
+                                        System.out.printf("Faturamento Diário: %.2f\n", faturamentoDiario);
                                         break;
-                                        case 2:
-                                            for (Cliente cliente : lista_clientes) {
-                                                Stats.faturamentoDiario();
-                                            }
-                                            break;
+                                    case 2:
+                                        LocalDate hoje = LocalDate.now();
+                                        LocalDate inicioSemana = hoje.minusDays(6); // Últimos 7 dias
+                                        double faturamentoSemanal = Stats.calcularFaturamento(inicioSemana, hoje);
+                                        System.out.printf("Faturamento Semanal: %.2f\n", faturamentoSemanal);
+                                        break;
                                     case 3:
-                                        for (Cliente cliente : lista_clientes) {
-                                            Stats.faturamentoSemanal();
-                                        }
-                                        break;
-                                    case 4:
-                                        for (Cliente cliente : lista_clientes) {
-                                            Stats.faturamentoMensal();
-                                        }
+                                        LocalDate hoje2 = LocalDate.now();
+                                        LocalDate inicioMes = hoje2.withDayOfMonth(1); // Primeiro dia do mês atual
+                                        double faturamentoMensal = Stats.calcularFaturamento(inicioMes, hoje2);
+                                        System.out.printf("Faturamento Mensal: %.2f\n", faturamentoMensal);
                                         break;
 
 
