@@ -6,11 +6,16 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class FuncCliente {
-//teste
+    //teste
     public static void adicionarCliente(ArrayList<Cliente> lista_cliente, ArrayList<Item> lista_item) {
         ArrayList<Item> lista_compras = new ArrayList<Item>();
         System.out.println("Insira o nif do cliente.");
         int nif = Ler.umInt();
+        for(Cliente c : lista_cliente) {
+            if(c.getNif()==nif) {
+                throw new NaoEncontreiException("Cliente já existe!");
+            }
+        }
         System.out.println("Insira o nome do cliente.");
         String nome = Ler.umaString();
         System.out.println("Insira o email do cliente.");
@@ -27,7 +32,7 @@ public class FuncCliente {
             throw new NaoEncontreiException("Cliente já existe !");
         }
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
             os.writeObject(lista_cliente);
             os.flush(); //
         } catch (IOException e) {
@@ -50,7 +55,7 @@ public class FuncCliente {
         }
         System.out.println("O cliente foi eliminado com sucesso!");
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
             os.writeObject(lista_cliente);
             os.flush(); //
         } catch (IOException e) {
@@ -70,7 +75,7 @@ public class FuncCliente {
         if (!check) {
             throw new NaoEncontreiException("Produto não encontrado! ");
         }
-        System.out.println("O que pretende alterar? (1- NIF, 2- Nome, 3-Email, 4-Idade, 5- Lista de compras. ) ");
+        System.out.println("O que pretende alterar? (1- NIF, 2- Nome, 3-Email, 4-Idade ) ");
         int escolha = Ler.umInt();
         switch (escolha) {
             case 1:
@@ -79,7 +84,7 @@ public class FuncCliente {
                 for (Cliente c : lista_cliente) {
                     if (c.getNif() == nif) {
                         c.setNif(nif2);
-                        System.out.println("Referência alterada com sucesso!");
+                        System.out.println("NIF alterada com sucesso!");
                     }
                 }
                 break;
@@ -99,7 +104,7 @@ public class FuncCliente {
                 for (Cliente c : lista_cliente) {
                     if (c.getNif() == nif) {
                         c.setEmail(email);
-                        System.out.println("Nome alterado com sucesso!");
+                        System.out.println("Email alterado com sucesso!");
                     }
                 }
                 break;
@@ -116,7 +121,7 @@ public class FuncCliente {
         }
 
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
             os.writeObject(lista_cliente);
             os.flush(); //
         } catch (IOException e) {

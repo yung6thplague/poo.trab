@@ -19,7 +19,7 @@ public class Fatura implements Serializable {
     }
 
 
-    public static void imprimirFatura(int numeroFatura, LocalDate data, Cliente cliente, List<Integer> quantidades, ArrayList<Item> listaCompra) {
+    public static void imprimirFatura(int numeroFatura, LocalDate data, Cliente cliente, ArrayList<Item> listaCompra) {
         double valorTotal = 0;
         System.out.println("--------- Fatura Fiscal ---------");
         System.out.println("Número da Fatura: " + numeroFatura);
@@ -30,12 +30,11 @@ public class Fatura implements Serializable {
 
         for (int i = 0; i < listaCompra.size(); i++) {
             Item produto = listaCompra.get(i);
-            int quantidade = quantidades.get(i);
             double precoUnitario = produto.getCusto();
-            double subtotal = precoUnitario * quantidade;
+            double subtotal = precoUnitario;
 
             System.out.printf("  - %s | Qtd: %d | Preço Unitário: %.2f | Subtotal: %.2f\n",
-                    produto.getNome(), quantidade, precoUnitario, subtotal);
+                    produto.getNome(), precoUnitario, subtotal);
 
             valorTotal += subtotal;
         }

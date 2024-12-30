@@ -17,6 +17,11 @@ public class FuncItem {
     public static void adicionarItem(ArrayList<Item> lista) {
         System.out.println("Insira a referência do item.");
         int codigo = Ler.umInt();
+        for (Item i : lista) {
+            if(i.getCodigo()==codigo) {
+                throw new NaoEncontreiException("Item já existe com essa referência!");
+            }
+        }
         System.out.println("Insira o nome do item.");
         String nome = Ler.umaString();
         System.out.println("Insira a descrição do item.");
@@ -35,7 +40,7 @@ public class FuncItem {
             throw new NaoEncontreiException("Item já existe na lista!");
         }
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat"));
             os.writeObject(lista);
             os.flush(); //
             os.close();
@@ -64,7 +69,7 @@ public class FuncItem {
         }
         System.out.println("O produto  foi eliminado com sucesso!");
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat"));
             os.writeObject(lista);
             os.flush(); //
         } catch (IOException e) {
@@ -151,7 +156,7 @@ public class FuncItem {
 
 
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat"));
             os.writeObject(lista);
             os.flush(); //
         } catch (IOException e) {
@@ -162,7 +167,7 @@ public class FuncItem {
     public static void registarVenda(String filePathItens, ArrayList<Cliente> listaClientes) {
         ArrayList<Item> listaItens = carregarItens(filePathItens);
         ArrayList<Item> itensComprados = new ArrayList<>();
-        filePathItens = "C:\\\\Users\\\\rodri\\\\OneDrive\\\\Documentos\\\\POO\\\\item.dat\"";
+        filePathItens = "C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat";
 
         System.out.println("Insira a referência dos itens que foram vendidos. (Prima 0 quando quiser terminar.)");
         int codigo;
@@ -209,7 +214,7 @@ public class FuncItem {
                     }
                 }
             }
-                    else {
+            else {
                 System.out.println("Venda cancelada, pois o cliente não está registado.");
                 return;
             }
@@ -239,7 +244,7 @@ public class FuncItem {
 
     public static ArrayList<Item> carregarItens(String filePath) {
         ArrayList<Item> lista = new ArrayList<>();
-        filePath = "C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat";
+        filePath = "C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat";
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             lista = (ArrayList<Item>) ois.readObject();
         } catch (FileNotFoundException e) {

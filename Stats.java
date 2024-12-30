@@ -10,7 +10,7 @@ public class Stats {
     }
 
     // Produtos Mais/Menos Vendidos
-    public static void produtosVendidos() {
+    public static void produtosVendidos(ArrayList<Cliente> clientes) {
         Item maisVendido = null;
         Item menosVendido = null;
         int maxVendas = 0;
@@ -43,7 +43,7 @@ public class Stats {
     }
 
     // Melhor Cliente
-    public static void melhoresClientes() {
+    public static void melhoresClientes(ArrayList<Cliente> clientes) {
         Cliente melhorCliente = null;
         double maiorGasto = 0;
 
@@ -63,7 +63,7 @@ public class Stats {
     }
 
     // Calcular Faturamento em um Período
-    public static double calcularFaturamento(LocalDate inicio, LocalDate fim) {
+    public static double calcularFaturamento(LocalDate inicio, LocalDate fim, ArrayList<Cliente> clientes) {
         double total = 0;
 
         for (Cliente cliente : clientes) {
@@ -79,7 +79,7 @@ public class Stats {
         return total;
     }
 
-    // Faturamento Diário
+    /*// Faturamento Diário
     public static void faturamentoDiario() {
         LocalDate hoje = LocalDate.now();
         double total = calcularFaturamento(hoje, hoje);
@@ -101,4 +101,6 @@ public class Stats {
         double total = calcularFaturamento(inicioMes, hoje);
         System.out.printf("Faturamento Mensal (%s a %s): %.2f\n", inicioMes, hoje, total);
     }
+
+     */
 }

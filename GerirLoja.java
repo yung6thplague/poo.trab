@@ -1,3 +1,7 @@
+// stats dá erro
+// nif é unico, nao devia ser possivel criar 2 clientes com mesmo nif -> mesmo se aplica aos produtos (FEITO!)s
+
+
 import myinputs.Ler;
 
 import java.io.*;
@@ -125,9 +129,40 @@ public class GerirLoja {
         int escolha, escolha_soft_segur, escolha_sist_oper, escolha_apt, escolha_prog_espec, escolha_stats, escolha_stats2, escolha_cliente, escolha_venda;
         ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
         ArrayList<Item> lista_item = new ArrayList<Item>();
-        ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat"));
-        ObjectInputStream is_cliente = new ObjectInputStream(new FileInputStream("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\cliente.dat"));
+        // ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat"));
+        //ObjectInputStream is_cliente = new ObjectInputStream(new FileInputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
+
         try {
+            ObjectInputStream is = new ObjectInputStream( new FileInputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat"));
+            ObjectInputStream is_cliente = new ObjectInputStream(new FileInputStream("C:\\Users\\Maia\\Documents\\UBI\\POO\\cliente.dat"));
+            lista_item = (ArrayList<Item>) is.readObject();
+            lista_clientes = (ArrayList<Cliente>) is_cliente.readObject();
+        }
+        catch (IOException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
+        /*
+        caso o de cima não funcionar
+
+        try {
+            while(true){
+                lista_item = (ArrayList<Item>) is.readObject();
+                lista_clientes = (ArrayList<Cliente>) is_cliente.readObject();
+            }
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }finally {
+                    is.close();
+                    is_cliente.close();
+        }
+
+
+         */
+
+
+
+        /*try {
             if (is == null || is_cliente == null) {
                 throw new IOException("Can't find file.");
             }
@@ -137,8 +172,6 @@ public class GerirLoja {
                 lista_item = (ArrayList<Item>) is.readObject();
                 lista_clientes = (ArrayList<Cliente>) is_cliente.readObject();
             }
-        } catch (EOFException e) {
-            System.out.println(e.getMessage());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
@@ -151,6 +184,8 @@ public class GerirLoja {
                 closeException.printStackTrace();
             }
         }
+
+         */
         do{
             escolha = menu();
             switch (escolha){
@@ -236,37 +271,37 @@ public class GerirLoja {
                         escolha_stats = menu_stats();
                         switch (escolha_stats) {
                             case 1:
-                                Stats.produtosVendidos();
+                                Stats.produtosVendidos(lista_clientes);
                             case 2:
-                                Stats.melhoresClientes();
+                                Stats.melhoresClientes(lista_clientes);
                             case 3:
-                            do{
-                                escolha_stats2 = menu_stats2();
-                                switch(escolha_stats2){
+                                do{
+                                    escolha_stats2 = menu_stats2();
+                                    switch(escolha_stats2){
 
-                                    case 1:
-                                        LocalDate data = LocalDate.now(); // Hoje
-                                        double faturamentoDiario = Stats.calcularFaturamento(data, data);
-                                        System.out.printf("Faturamento Diário: %.2f\n", faturamentoDiario);
-                                        break;
-                                    case 2:
-                                        LocalDate hoje = LocalDate.now();
-                                        LocalDate inicioSemana = hoje.minusDays(6); // Últimos 7 dias
-                                        double faturamentoSemanal = Stats.calcularFaturamento(inicioSemana, hoje);
-                                        System.out.printf("Faturamento Semanal: %.2f\n", faturamentoSemanal);
-                                        break;
-                                    case 3:
-                                        LocalDate hoje2 = LocalDate.now();
-                                        LocalDate inicioMes = hoje2.withDayOfMonth(1); // Primeiro dia do mês atual
-                                        double faturamentoMensal = Stats.calcularFaturamento(inicioMes, hoje2);
-                                        System.out.printf("Faturamento Mensal: %.2f\n", faturamentoMensal);
-                                        break;
+                                        case 1:
+                                            LocalDate data = LocalDate.now(); // Hoje
+                                            double faturamentoDiario = Stats.calcularFaturamento(data, data, lista_clientes);
+                                            System.out.printf("Faturamento Diário: %.2f\n", faturamentoDiario);
+                                            break;
+                                        case 2:
+                                            LocalDate hoje = LocalDate.now();
+                                            LocalDate inicioSemana = hoje.minusDays(6); // Últimos 7 dias
+                                            double faturamentoSemanal = Stats.calcularFaturamento(inicioSemana, hoje, lista_clientes);
+                                            System.out.printf("Faturamento Semanal: %.2f\n", faturamentoSemanal);
+                                            break;
+                                        case 3:
+                                            LocalDate hoje2 = LocalDate.now();
+                                            LocalDate inicioMes = hoje2.withDayOfMonth(1); // Primeiro dia do mês atual
+                                            double faturamentoMensal = Stats.calcularFaturamento(inicioMes, hoje2, lista_clientes);
+                                            System.out.printf("Faturamento Mensal: %.2f\n", faturamentoMensal);
+                                            break;
 
 
-                                }
+                                    }
 
-                            }while (escolha_stats2 != 5);
-                            break;
+                                }while (escolha_stats2 != 4);
+                                break;
 
 
                         }
@@ -280,7 +315,13 @@ public class GerirLoja {
                                 System.out.println(lista_clientes.toString());
                                 break;
                             case 2:
-                                FuncCliente.adicionarCliente(lista_clientes, lista_item);
+                                FuncCliente.atualizarCliente(lista_clientes);
+                                break;
+                            case 3:
+                                FuncCliente.eliminarCliente(lista_clientes);
+                                break;
+                            case 4:
+                                FuncCliente.adicionarCliente(lista_clientes,lista_item);
                                 break;
 
                         }
@@ -293,7 +334,7 @@ public class GerirLoja {
                         escolha_venda = menu_venda();
                         switch (escolha_venda) {
                             case 1:
-                                FuncItem.registarVenda("C:\\Users\\rodri\\OneDrive\\Documentos\\POO\\item.dat",lista_clientes);
+                                FuncItem.registarVenda("C:\\Users\\Maia\\Documents\\UBI\\POO\\item.dat",lista_clientes);
                                 break;
 
                         }
