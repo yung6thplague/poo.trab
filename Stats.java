@@ -86,14 +86,14 @@ public class Stats {
     }
 
 
-    public void faturamentoDiario(Cliente cliente) {
+    public static void faturamentoDiario(Cliente cliente) {
         LocalDate hoje = LocalDate.now();
         double total = calcularFaturamento(cliente, hoje, hoje);
         System.out.printf("Faturamento Diário (%s): %.2f\n", hoje, total);
     }
 
     // Faturamento Semanal
-    public void faturamentoSemanal(Cliente cliente) {
+    public static void faturamentoSemanal(Cliente cliente) {
         LocalDate hoje = LocalDate.now();
         LocalDate inicioSemana = hoje.minusDays(6); // Últimos 7 dias
         double total = calcularFaturamento(cliente, inicioSemana, hoje);
@@ -101,7 +101,7 @@ public class Stats {
     }
 
     // Faturamento Mensal
-    public void faturamentoMensal(Cliente cliente) {
+    public static void faturamentoMensal(Cliente cliente) {
         LocalDate hoje = LocalDate.now();
         LocalDate inicioMes = hoje.withDayOfMonth(1); // Primeiro dia do mês
         double total = calcularFaturamento(cliente, inicioMes, hoje);

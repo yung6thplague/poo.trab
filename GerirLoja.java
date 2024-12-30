@@ -3,6 +3,7 @@ import myinputs.Ler;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class GerirLoja {
 
@@ -243,21 +244,29 @@ public class GerirLoja {
                                 escolha_stats2 = menu_stats2();
                                 switch(escolha_stats2){
                                     case 1:
-                                        Stats.calcularFaturamento();
+                                       // Stats.calcularFaturamento();
+                                        break;
                                         case 2:
-                                            Stats.faturamentoDiario();
+                                            for (Cliente cliente : lista_clientes) {
+                                                Stats.faturamentoDiario(cliente);
+                                            }
+                                            break;
                                     case 3:
-                                        Stats.faturamentoSemanal();
+                                        for (Cliente cliente : lista_clientes) {
+                                            Stats.faturamentoSemanal(cliente);
+                                        }
+                                        break;
                                     case 4:
-                                        Stats.faturamentoMensal();
-
-
+                                        for (Cliente cliente : lista_clientes) {
+                                            Stats.faturamentoMensal(cliente);
+                                        }
+                                        break;
 
 
                                 }
 
                             }while (escolha_stats2 != 5);
-
+                            break;
 
 
                         }
