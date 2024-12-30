@@ -248,17 +248,17 @@ public class GerirLoja {
                                         break;
                                         case 2:
                                             for (Cliente cliente : lista_clientes) {
-                                                Stats.faturamentoDiario(cliente);
+                                                Stats.faturamentoDiario();
                                             }
                                             break;
                                     case 3:
                                         for (Cliente cliente : lista_clientes) {
-                                            Stats.faturamentoSemanal(cliente);
+                                            Stats.faturamentoSemanal();
                                         }
                                         break;
                                     case 4:
                                         for (Cliente cliente : lista_clientes) {
-                                            Stats.faturamentoMensal(cliente);
+                                            Stats.faturamentoMensal();
                                         }
                                         break;
 

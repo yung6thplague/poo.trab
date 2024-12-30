@@ -1,10 +1,8 @@
-import java.util.*;
 import java.time.LocalDate;
-import myinputs.Ler;
-import java.io.*;
+import java.util.*;
+
 public class Stats {
     private static List<Cliente> clientes;
-
 
     // Construtor
     public Stats(List<Cliente> clientes) {
@@ -13,29 +11,30 @@ public class Stats {
 
     // Produtos Mais/Menos Vendidos
     public static void produtosVendidos() {
-        Map<Item, Integer> contador = new HashMap<>();
-
-        for (Cliente cliente: clientes) {
-            List<Item> produtos = cliente.getLista_compra();
-            for (Item produto : produtos) {
-                contador.put(produto, contador.getOrDefault(produto, 0) + 1);
-            }
-        }
-
         Item maisVendido = null;
         Item menosVendido = null;
-        int maxVendas = Integer.MIN_VALUE;
+        int maxVendas = 0;
         int minVendas = Integer.MAX_VALUE;
 
-        for (Map.Entry<Item, Integer> entry : contador.entrySet()) {
-            int quantidade = entry.getValue();
-            if (quantidade > maxVendas) {
-                maxVendas = quantidade;
-                maisVendido = entry.getKey();
-            }
-            if (quantidade < minVendas) {
-                minVendas = quantidade;
-                menosVendido = entry.getKey();
+        for (Cliente cliente : clientes) {
+            List<Item> listaCompra = cliente.getLista_compra();
+            for (Item item : listaCompra) {
+                int quantidadeVendida = 0;
+                for (Cliente c : clientes) {
+                    for (Item i : c.getLista_compra()) {
+                        if (i.equals(item)) {
+                            quantidadeVendida++;
+                        }
+                    }
+                }
+                if (quantidadeVendida > maxVendas) {
+                    maxVendas = quantidadeVendida;
+                    maisVendido = item;
+                }
+                if (quantidadeVendida < minVendas) {
+                    minVendas = quantidadeVendida;
+                    menosVendido = item;
+                }
             }
         }
 
@@ -45,24 +44,18 @@ public class Stats {
 
     // Melhor Cliente
     public static void melhoresClientes() {
-        Map<Cliente, Double> totalPorCliente = new HashMap<>();
-
-        for (Cliente cliente : clientes) {
-            double total = 0;
-            for (Item item : cliente.getLista_compra()) {
-                total += item.getCusto();
-            }
-
-            totalPorCliente.put(cliente, total);
-        }
-
         Cliente melhorCliente = null;
         double maiorGasto = 0;
 
-        for (Map.Entry<Cliente, Double> entry : totalPorCliente.entrySet()) {
-            if (entry.getValue() > maiorGasto) {
-                maiorGasto = entry.getValue();
-                melhorCliente = entry.getKey();
+        for (Cliente cliente : clientes) {
+            double totalGasto = 0;
+            for (Item item : cliente.getLista_compra()) {
+                totalGasto += item.getCusto();
+            }
+
+            if (totalGasto > maiorGasto) {
+                maiorGasto = totalGasto;
+                melhorCliente = cliente;
             }
         }
 
@@ -70,13 +63,14 @@ public class Stats {
     }
 
     // Calcular Faturamento em um Período
-    public static double calcularFaturamento(Cliente cliente, LocalDate inicio, LocalDate fim) {
+    public static double calcularFaturamento(LocalDate inicio, LocalDate fim) {
         double total = 0;
 
-        if (cliente.getLista_compra() != null) { // Verifica se a lista não é nula
+        for (Cliente cliente : clientes) {
             for (Item item : cliente.getLista_compra()) {
-                if (item.getDataCompra() != null && // Verifica se a data da compra não é nula
-                        !item.getDataCompra().isBefore(inicio) && !item.getDataCompra().isAfter(fim)) {
+                LocalDate dataCompra = item.getDataCompra();
+                if ((dataCompra.isEqual(inicio) || dataCompra.isAfter(inicio)) &&
+                        (dataCompra.isEqual(fim) || dataCompra.isBefore(fim))) {
                     total += item.getCusto();
                 }
             }
@@ -85,29 +79,26 @@ public class Stats {
         return total;
     }
 
-
-    public static void faturamentoDiario(Cliente cliente) {
+    // Faturamento Diário
+    public static void faturamentoDiario() {
         LocalDate hoje = LocalDate.now();
-        double total = calcularFaturamento(cliente, hoje, hoje);
+        double total = calcularFaturamento(hoje, hoje);
         System.out.printf("Faturamento Diário (%s): %.2f\n", hoje, total);
     }
 
     // Faturamento Semanal
-    public static void faturamentoSemanal(Cliente cliente) {
+    public static void faturamentoSemanal() {
         LocalDate hoje = LocalDate.now();
         LocalDate inicioSemana = hoje.minusDays(6); // Últimos 7 dias
-        double total = calcularFaturamento(cliente, inicioSemana, hoje);
+        double total = calcularFaturamento(inicioSemana, hoje);
         System.out.printf("Faturamento Semanal (%s a %s): %.2f\n", inicioSemana, hoje, total);
     }
 
     // Faturamento Mensal
-    public static void faturamentoMensal(Cliente cliente) {
+    public static void faturamentoMensal() {
         LocalDate hoje = LocalDate.now();
         LocalDate inicioMes = hoje.withDayOfMonth(1); // Primeiro dia do mês
-        double total = calcularFaturamento(cliente, inicioMes, hoje);
+        double total = calcularFaturamento(inicioMes, hoje);
         System.out.printf("Faturamento Mensal (%s a %s): %.2f\n", inicioMes, hoje, total);
     }
-
-
 }
-
